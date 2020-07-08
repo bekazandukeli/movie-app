@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { InputGroup, FormControl } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BsSearch } from 'react-icons/bs';
 import { searchApi } from '../api';
 import MovieList from '../components/MovieList';
+import SearchBar from '../components/SearchBar';
 
 function MovieSearch({ fav, setFav }) {
     const [ movieList, setmovieList ] = useState([]);
@@ -14,18 +12,7 @@ function MovieSearch({ fav, setFav }) {
 
     return (
         <>
-            <InputGroup size="lg" className="mb-3">
-                <FormControl
-                    autoFocus={true}
-                    onChange={(ev) => handleSearch(ev.target.value)} 
-                    placeholder="Search Movies..."
-                    aria-label="search"
-                />
-                <InputGroup.Append>
-                    <InputGroup.Text><BsSearch size="24px" /></InputGroup.Text>
-                </InputGroup.Append>
-            </InputGroup> 
-            
+            <SearchBar handleSearch={handleSearch} />
             <MovieList movieList={movieList} fav={fav} setFav={setFav}/>
         </>
     );
