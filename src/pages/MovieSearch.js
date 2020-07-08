@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import { InputGroup, FormControl, Table, Button } from 'react-bootstrap';
+import { InputGroup, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsSearch } from 'react-icons/bs';
-import { searchApi, addMovie } from '../api';
+import { searchApi } from '../api';
+import MovieList from '../components/MovieList';
 
-function MovieSearch({ fav, setFav, isStarFilled }) {
+function MovieSearch({ fav, setFav }) {
     const [ movieList, setmovieList ] = useState([]);
 
     async function handleSearch(searchText) {
         setmovieList(await searchApi(searchText));
-    }
-
-    async function handleFavButton(id){
-        const movieIds = fav.map((movie) => movie.id);
-        if (movieIds.indexOf(id) === -1) {
-            const addedMovie = await addMovie(id);
-            setFav([...fav, addedMovie]);
-        } else setFav(fav.filter(movie => movie.id !== id));
     }
 
     return (
@@ -32,36 +25,8 @@ function MovieSearch({ fav, setFav, isStarFilled }) {
                     <InputGroup.Text><BsSearch size="24px" /></InputGroup.Text>
                 </InputGroup.Append>
             </InputGroup> 
-            {
-                Boolean(movieList.length > 0)
-                    ?
-                        
-                        <Table striped hover>
-                            <tbody>
-                            {
-                                movieList.map((item) => (
-                                        <tr key={item.id}>
-                                            <td>
-                                                <img src={`https://image.tmdb.org/t/p/w185/${item["poster_path"]}`} alt="poster" />
-                                            </td>
-                                            <td>
-                                                <h1>{item.title}</h1>
-                                                <p style={{ fontSize: '24px' }}>{item.overview}</p>
-                                            <Button variant="warning" onClick={() => handleFavButton(item.id)}>
-                                                {isStarFilled(item.id)}
-                                                Favorite
-                                            </Button>
-                                            </td>
-                                        </tr>
-                                ))
-                            }
-                            </tbody>
-                        </Table>                        
-                    : 
-                        <h2 style={{ textAlign: 'center', color: "#777" }}>Just Type! ^_^</h2> 
-
-            }
             
+            <MovieList movieList={movieList} fav={fav} setFav={setFav}/>
         </>
     );
 }
