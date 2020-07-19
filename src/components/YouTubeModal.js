@@ -22,7 +22,7 @@ export default function YouTubeModal(props) {
                       height="315" 
                       src={`https://www.youtube.com/embed/${props.trailer.key}`}
                       frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen
+                      allowfullscreen="allowFullScreen"
                       title={props.trailer.id}
                   > 
                   </iframe>
