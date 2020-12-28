@@ -6,10 +6,10 @@ import SearchBar from '../components/SearchBar';
 function MovieSearch({ fav, setFav }) {
     const [ movieList, setmovieList ] = useState([]);
     function debounce(callback, wait) {
-        let timeOutId;
+        let timerId;
         return (...args) => {
-            clearTimeout(timeOutId);
-            timeOutId = setTimeout(() => {
+            clearTimeout(timerId);
+            timerId = setTimeout(() => {
                 callback(...args);
             } , wait)
         }
@@ -23,7 +23,6 @@ function MovieSearch({ fav, setFav }) {
 
     return (
         <>
-        {console.log('render')}
             <SearchBar handleSearch={debounceSearch} />
             <MovieList movieList={movieList} fav={fav} setFav={setFav}/>
         </>
